@@ -1,8 +1,13 @@
 const app = require('../../index');
 const request = require('supertest');
 const should = require('should');
+const models = require('../../models');
 
 describe('GET /users', ()=>{
+    const users = [{name:'alice'},{name:'bek'},{name:'chris'},]
+    before(() => models.sequelize.sync({force:true}));
+    before(()=> models.User.bulkCreate(users))
+
     describe('성공시', () => {
         it('유저 객체를 담음 배열로 응답한다.', (done) => {
             request(app)
@@ -36,6 +41,10 @@ describe('GET /users', ()=>{
 })
 
 describe('GET /users/:id', () => {
+    const users = [{name:'alice'},{name:'bek'},{name:'chris'},]
+    before(() => models.sequelize.sync({force:true}));
+    before(()=> models.User.bulkCreate(users))
+
     describe('성공시', () => {
         it('id가 1인 유저의 객체를 보여준다.', (done) => {
             request(app)
@@ -65,6 +74,10 @@ describe('GET /users/:id', () => {
 })
 
 describe('DELETE /users/:id는', () => {
+    const users = [{name:'alice'},{name:'bek'},{name:'chris'},]
+    before(() => models.sequelize.sync({force:true}));
+    before(()=> models.User.bulkCreate(users))
+
     describe('성공시', () => {
         it('204를 응답한다.', (done) => {
             request(app)
@@ -86,6 +99,10 @@ describe('DELETE /users/:id는', () => {
 
 
 describe('POST /users는', () => {
+    const users = [{name:'alice'},{name:'bek'},{name:'chris'},]
+    before(() => models.sequelize.sync({force:true}));
+    before(()=> models.User.bulkCreate(users))
+
     describe('성공시', () => {
         let name = 'daniel',
             body;
@@ -128,6 +145,10 @@ describe('POST /users는', () => {
 })
 
 describe('PUT /users/:id는', () => {
+    const users = [{name:'alice'},{name:'bek'},{name:'chris'},]
+    before(() => models.sequelize.sync({force:true}));
+    before(()=> models.User.bulkCreate(users))
+
     describe('성공시', () => {
         it('변경된 name을 반환한다.', (done) => {
             const name = 'chally'
